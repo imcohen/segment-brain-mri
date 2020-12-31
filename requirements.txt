@@ -1,0 +1,4 @@
+jupyter==1.0.0
+matplotlib=3.3.3
+pandas==1.1.5
+scikit-image==0.18.0

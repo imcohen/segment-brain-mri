@@ -1,0 +1,6 @@
+/.idea/
+*.tif
+*.csv
+.ipynb_checkpoints
+/cpp/
+/build/
