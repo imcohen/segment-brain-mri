@@ -138,3 +138,26 @@ def extract_curve(dist_map, end_point):
         curve.append(ind_to_coord(neigh_ind[arg_min], n_rows, n_cols))
 
     return np.array(np.flip(curve, 0))
+
+
+def metrics(mask_, gt_):
+
+    lnot = np.logical_not
+    land = np.logical_and
+
+    true_positive = np.sum(land((mask_), (gt_)))
+    false_positive = np.sum(land((mask_), lnot(gt_)))
+    false_negative = np.sum(land(lnot(mask_), (gt_)))
+    true_negative = np.sum(land(lnot(mask_), lnot(gt_)))
+
+    M = np.array([[true_negative, false_negative],
+                  [false_positive, true_positive]]).astype(np.float64)
+    metrics = {}
+    metrics['Sensitivity'] = M[1, 1] / (M[0, 1] + M[1, 1])
+    metrics['Specificity'] = M[0, 0] / (M[0, 0] + M[1, 0])
+    metrics['Dice'] = 2 * M[1, 1] / (M[1, 1] * 2 + M[1, 0] + M[0, 1])
+
+    # metrics may be NaN if denominator is zero! use np.nanmean() while
+    # computing average to ignore NaNs.
+
+    return metrics
