@@ -10,16 +10,40 @@ Please, first clone the repo.
 
 Then, download the dataset (~2 GB) from https://www.kaggle.com/mateuszbuda/lgg-mri-segmentation and unzip it into the 'data' directory.
 
-The code is written with Python3.8.3, and uses a PyTorch implementation of UNet (https://pytorch.org/hub/mateuszbuda_brain-segmentation-pytorch_unet/).
+The code is written with Python 3.8, and uses a PyTorch implementation of UNet (https://pytorch.org/hub/mateuszbuda_brain-segmentation-pytorch_unet/).
 
-## Installation via Docker
+## Requirements
+
+### Using Conda
+
+Having Conda installed on your local machine, you can create a new Conda environment for the project using the file [environment.yml](environment.yml).
+
+Run the following lines from the project root directory to create the environment and activate it :
+
+```
+conda env create -f environment.yml
+conda activate segment-brain-mri
+```
+
+Then, to create a Jupyter kernel associated to your Conda environment, please run :
+
+```
+python -m ipykernel install --user --name=segment-brain-mri
+```
+
+When you will launch Jupyter Notebook, select the kernel 'segment-brain-mri'.
+
+### Using Docker
 
 You must have [Docker](https://www.docker.com/) installed on your local machine.
 
-From the project root directory, run the following docker command to build the image 'segment-brain-mri' from the [Dockerfile](Dockerfile) :
+From the project root directory, run the following docker command to build the Docker image 'segment-brain-mri' from the [Dockerfile](Dockerfile) :
 ```
 docker build . -t segment-brain-mri
 ```
+
+<ins>Note</ins>: The size of the Docker image is about 4Go. If you encounter a problem of memory, you probably need to increase your disk image size. You can modify it by going to 'Docker > Preferences > Disk image size'.
+
 When the build is finished, you can start a container based on your docker image 'segment-brain-mri' :
 ```
 docker run -it -v $PWD:/home/segment-brain-mri -p 5000:5000 segment-brain-mri bash
@@ -30,6 +54,7 @@ To start a Jupyter notebook session, run the following command :
 jupyter notebook --port=5000 --ip=0.0.0.0 --allow-root
 ```
 Copy/paste the output URL with port 5000 to your browser.
+
 
 ## Notebooks
 
